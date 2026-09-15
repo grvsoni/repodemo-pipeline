@@ -1,5 +1,6 @@
 inputSet:
   name: Trigger Input Set
+  tags: {}
   identifier: Trigger_Input_Set
   orgIdentifier: Demo
   projectIdentifier: Migration
@@ -8,8 +9,8 @@ inputSet:
     properties:
       ci:
         codebase:
-          repoName: <+trigger.payload.repository.name>
+          repoName: <+trigger.payload.pull_request.base.repo.name>
           build:
             type: branch
             spec:
-              branch: <+trigger.payload.ref.replace("refs/heads/", "")>
+              branch: <+trigger.payload.pull_request.base.ref>
