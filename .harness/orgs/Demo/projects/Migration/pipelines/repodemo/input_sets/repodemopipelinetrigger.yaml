@@ -1,0 +1,15 @@
+inputSet:
+  name: Trigger Input Set
+  identifier: Trigger_Input_Set
+  orgIdentifier: Demo
+  projectIdentifier: Migration
+  pipeline:
+    identifier: repodemo
+    properties:
+      ci:
+        codebase:
+          repoName: <+trigger.payload.repository.name>
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.payload.ref.replace("refs/heads/", "")>
