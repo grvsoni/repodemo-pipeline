@@ -1,0 +1,57 @@
+pipeline:
+  name: repodemo
+  identifier: repodemo
+  projectIdentifier: Migration
+  orgIdentifier: Demo
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.repodemo-git
+        repoName: <+input>
+        build: <+input>
+  stages:
+    - stage:
+        name: Build and Test
+        identifier: Build_and_Test
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Install Dependencies
+                  identifier: Install_Dependencies
+                  spec:
+                    shell: Sh
+                    image: node:20
+                    command: npm ci
+              - step:
+                  type: Run
+                  name: Unit Tests
+                  identifier: Unit_Tests
+                  spec:
+                    shell: Sh
+                    image: node:20
+                    command: npm test
+                    reports:
+                      type: JUnit
+                      spec:
+                        paths:
+                          - "**/junit.xml"
+                          - "**/test-results/**/*.xml"
+              - step:
+                  type: Run
+                  name: Build
+                  identifier: Build
+                  spec:
+                    shell: Sh
+                    image: node:20
+                    command: npm run build
