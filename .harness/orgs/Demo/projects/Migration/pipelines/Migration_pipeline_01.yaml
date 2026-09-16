@@ -1,0 +1,42 @@
+pipeline:
+  name: web-frontend
+  identifier: web_frontend_0d221fb9
+  projectIdentifier: Migration
+  orgIdentifier: Demo
+  description: ''
+  tags:
+    migrated_using: Standalone-Migrator
+    source: jenkins_mapper
+    source_job: web-frontend
+    source_job_path: templates/web-frontend
+  template:
+    templateRef: sampleservicetemplate
+    versionLabel: v1
+    templateInputs:
+      variables:
+      - name: ENVIRONMENT
+        type: String
+        value: staging
+      - name: JIRA_PROJECT
+        type: String
+        value: sample-shared-lib.git
+      - name: DEPLOY_ENABLED
+        type: String
+        value: '1'
+      - name: RTV
+        type: String
+        value: <+input>.allowedValues(true,false).default(false)
+      - name: teamName
+        type: String
+        value: service-excellence
+      - name: appName
+        type: String
+        value: sample-service
+      - name: jiraComponent
+        type: String
+        value: sample-component
+      properties:
+        ci:
+          codebase:
+            connectorRef: <+input>
+            build: <+input>
